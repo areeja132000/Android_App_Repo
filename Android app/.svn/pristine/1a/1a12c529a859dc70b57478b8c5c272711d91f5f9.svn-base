@@ -1,0 +1,152 @@
+<resources>
+    <string name="app_name">TeamBrianCanWeSwitchOurName Shopping App</string>
+
+    <!-- Strings related to the login page -->
+    <string name="login_title">Welcome! Please log in or register.</string>
+    <string name="login_id">Enter ID</string>
+    <string name="login_password">Enter Password</string>
+    <string name="login_login_button">Login</string>
+    <string name="login_create_acc_button">Initialize</string>
+
+    <string name="logout">Logout</string>
+    <string name="back">Back</string>
+
+    <!-- Strings related to the create customer/employee account page -->
+    <string name="create_cust_acc_title">Register As A Customer</string>
+    <string name="create_acc_name">Name</string>
+    <string name="create_acc_address">Address</string>
+    <string name="create_acc_age">Age</string>
+    <string name="create_acc_password">Password</string>
+    <string name="create_acc_create_button">Register</string>
+    <string name="create_employee_acc_title">Register An Employee</string>
+
+    <string name="create_acc_create_relay">Your new ID is:</string>
+
+    <!-- Strings related to the create admin page -->
+    <string name="admin_title">Admin Control Panel</string>
+    <string name="admin_promote_btn">Promote an employee</string>
+    <string name="admin_view_books">View books</string>
+    <string name="admin_inactive">View inactive accounts</string>
+    <string name="admin_active">View active accounts</string>
+
+    <!-- Strings related to request account page -->
+    <string name="RequestAcctTitle">Request Account</string>
+    <string name="RequestAcct">Please pass to employee for verification</string>
+    <string name="RequestAcctBtn">Request Account</string>
+    <string name="RequestAcctCustomerId">Customer Id</string>
+    <string name="RequestAcctCustomerPass">Customer Password</string>
+    <string name="RequestAcctCustomerCredentials">Please enter in your credentials</string>
+
+    <!-- Strings related to the admin promote page -->
+    <string name="admin_promote_title">Promote An Employee</string>
+    <string name="admin_promote_id">ID of employee to be promoted</string>
+    <string name="admin_promote_promote_btn">Promote</string>
+    <string name="admin_promote_fail_toast">This ID isn\'t associated with an employee!</string>
+    <string name="admin_promote_promote_success_toast">Employee has been successfully promoted!</string>
+
+    <!-- Strings related to the admin view books/inactive accounts/active accounts pages -->
+    <string name="admin_vb_title">View Books</string>
+    <string name="admin_inactive_title">View Inactive Accounts</string>
+    <string name="admin_active_title">View Active Accounts</string>
+    <string name="admin_generate_btn">Generate report</string>
+
+    <!-- Strings related to the employee page -->
+    <string name="employee_title">Employee Control Panel</string>
+    <string name="employee_Authenticate">Authenticate</string>
+    <string name="employee_make_cust">Make a new customer</string>
+    <string name="employee_make_employee">Make a new employee</string>
+    <string name="employee_restock">Restock items</string>
+
+    <!-- Strings related to the authenticate page -->
+    <string name="authenticate_title">Authentication Portal</string>
+    <string name="authenticate_btn">Authenticate</string>
+
+    <!-- Strings related to the employee -> customer account creation page -->
+    <string name="employee_cust_acc_make">Make An Account For A Customer</string>
+    <string name="employee_cust_acc_make_relay">The customer\'s account ID is: </string>
+
+    <!-- Strings related to the employee -> employee account creation page -->
+    <string name="employee_new_hire">Make An Account For A New Hire</string>
+
+    <!-- Strings related to the restock page -->
+    <string name="employee_restock_title">Restock Items</string>
+    <string name="employee_restock_item">Item</string>
+    <string name="employee_restock_qty">Quantity</string>
+    <string name="employee_restock_btn">Restock</string>
+    <string name="employee_restock_toast">The item has been successfully restocked.</string>
+
+    <!-- Strings related to the customer page -->
+    <string name="customer_main_title">Welcome to our shop!\n What would you like to do?</string>
+    <string name="customer_main_cart_btn">View your cart</string>
+    <string name="customer_main_check_price_btn">Check the total Price</string>
+    <string name="customer_main_remove_item_btn">Remove from cart</string>
+    <string name="customer_main_req_sell_btn">Request to become a seller</string>
+    <string name="customer_main_checkout_btn">Checkout</string>
+    <string name="customer_add_cart_title">Add items to your cart</string>
+    <string name="customer_add_cart_quantity">Quantity</string>
+
+    <string name="customer_add">Add Item To Your Cart</string>
+    <string name="customer_main_add_btn">Add to Cart</string>
+    <string name="customer_item_to_add_btn">Item to Add</string>
+    <string name="customer_quantity_of_item_btn">Quantity of Added Item</string>
+
+    <string name="customer_item_qty">Quantity</string>
+    <string name="customer_item_stock">In Stock: </string>
+    <string name="customer_item_price">Price: </string>
+    <string name="customer_success_add_toast">The item(s) have been successfully added to your cart!</string>
+    <string name="customer_fail_add_toast">Item wasn\'t added to your cart! Please check our stock!</string>
+    <string name="customer_cart_btn">View Cart</string>
+    <string name="customer_checkout">Checkout</string>
+
+    <string name="customer_check_cart_title">View Your Cart</string>
+
+    <string name="customer_check_price_title">Check total price of Cart</string>
+    <string name="customer_check_price_btn">Check Price</string>
+
+    <!-- Strings related to the add cart page -->
+    <string name="add_quantity">Enter Quantity</string>
+    <string name="add_item_name">Enter Name of Item</string>
+
+    <!-- Strings related to the add cart page -->
+    <string name="customer_remove_items_title">Remove an Item from the Cart</string>
+
+    <!-- Strings related to the checkout cart page -->
+    <string name="customer_checkout_your_cart">Currently in your cart:</string>
+
+    <!-- Strings related to the request to become a seller  page -->
+    <string name="customer_request_to_be_seller_title">Become a seller</string>
+    <string name="customer_seller_name_input">Name of the item you wish a sell</string>
+    <string name="customer_seller_price_input">Price of the item you wish to sell</string>
+    <string name="customer_seller_qty_input">How many do you have in stock?</string>
+    <string name="customer_seller_request_btn">Request to become a seller</string>
+
+    <!-- Strings related to the make new customer page -->
+    <string name="new_customer_menu">Make New Customer</string>
+
+    <!-- Strings related to the check cart page -->
+    <string name="cart_items">Cart Items</string>
+
+    <!-- Strings related to the initialization page -->
+    <string name="first_employ">Make Employee</string>
+    <string name="first_admin">Make Admin</string>
+    <string name="initialization_title">Initialize Store </string>
+
+    <!-- Strings related to the add to cart page -->
+    <string name="Add_cart_title">Add an item to the cart</string>
+    <string name="Add_cart_btn">Add Item</string>
+
+    <!-- Strings related to the restoring a cart. -->
+    <string name="prompt_restore">Would you like to restore account?</string>
+    <string name="hint_restore_acount">Enter Account Id</string>
+    <string name="restore">Restore Account</string>
+    <string name="No_thank">No Thank You</string>
+
+    <!-- Strings related to the request to sell page -->
+    <string name="Add_Item_Info">Please enter item information</string>
+    <string name="Employee_authenticate">Please give to employee to authenticate</string>
+    <string name="ItemPrice">Enter item price</string>
+    <string name="ItemQuantity">Enter Number of Items you Wish to Sell</string>
+    <string name="EmployeeId">Enter Employee Id</string>
+    <string name="EmployeePassword">Enter Employee Password</string>
+
+</resources>

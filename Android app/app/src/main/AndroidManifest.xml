@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.teambriancanweswitchourname">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".RestoreAccount" />
+        <activity android:name=".InitializeApp" />
+        <activity android:name=".AdminPanel" />
+        <activity android:name=".MakeEmployee1" />
+        <activity android:name=".MakeCustomer1" />
+        <activity android:name=".Restock1" />
+        <activity android:name=".RequestAccount" />
+        <activity android:name=".AddToCart" />
+        <activity android:name=".CheckOut" />
+        <activity android:name=".RequestToSell" />
+        <activity android:name=".CheckPrice" />
+        <activity android:name=".RemoveFromCart" />
+        <activity android:name=".CheckCart" />
+        <activity android:name=".Restock" />
+        <activity android:name=".MakeEmployee" />
+        <activity android:name=".MakeCustomer" />
+        <activity android:name=".CustomerMenu" />
+        <activity android:name=".Authenticate" />
+        <activity android:name=".EmployeePanel" />
+        <activity android:name=".ViewActiveAccounts" />
+        <activity android:name=".ViewInactiveAccounts" />
+        <activity android:name=".ViewBooksAdmin" />
+        <activity android:name=".AdminPromote" />
+        <activity android:name="Security.example.teambriancanweswitchourname.AdminPanel" />
+        <activity android:name=".CreateAccount" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>
