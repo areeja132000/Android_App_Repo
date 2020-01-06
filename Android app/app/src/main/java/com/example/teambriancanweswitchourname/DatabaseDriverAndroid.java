@@ -3,6 +3,7 @@ package com.example.teambriancanweswitchourname;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -365,6 +366,12 @@ public class DatabaseDriverAndroid extends SQLiteOpenHelper {
     Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM ACCOUNT WHERE userId = ? and ACTIVE = ?",
             new String[] {String.valueOf(userId), String.valueOf(0)});
     return cursor;
+  }
+
+  public int getUserTableSize() {
+    SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+    long count = DatabaseUtils.queryNumEntries(sqLiteDatabase, "USERS");
+    return (int)count;
   }
 
   //UPDATE METHODS

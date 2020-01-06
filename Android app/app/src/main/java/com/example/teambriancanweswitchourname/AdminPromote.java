@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.b07.store.Sale;
 import com.b07.store.SaleImpl;
+import com.b07.users.Admin;
 import com.example.teambriancanweswitchourname.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -18,17 +19,21 @@ import java.util.ArrayList;
 
     public class AdminPromote extends AppCompatActivity {
 
+        Admin currentAdmin;
         DatabaseDriverAndroid mydb = new DatabaseDriverAndroid(AdminPromote.this);
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_admin_promote);
+            Intent intent = getIntent();
+            currentAdmin = (Admin) intent.getSerializableExtra("adminUser");
 
             Button promoteButton = (Button) findViewById(R.id.promoteBtn);
             promoteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     EditText employeeId = (EditText) findViewById(R.id.promotedInput);
                     int employeeIdCleaned = Integer.parseInt(employeeId.getText().toString());
                     int roleId = mydb.getUserRole(employeeIdCleaned);
@@ -43,6 +48,7 @@ import java.util.ArrayList;
                             }
                             allRoles.moveToNext();
                         }
+                        allRoles.close();
                         mydb.updateUserRole(adminRoleId, employeeIdCleaned);
                         new MaterialAlertDialogBuilder(AdminPromote.this).setMessage("Employee promoted. Thank you.").setPositiveButton("Ok", null).show();
                     } else {
@@ -57,6 +63,7 @@ import java.util.ArrayList;
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(AdminPromote.this, AdminPanel.class);
+                    intent.putExtra("admin", currentAdmin.getId());
                     startActivity(intent);
                     finish();
                 }

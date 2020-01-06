@@ -12,47 +12,45 @@ import android.widget.TextView;
 import com.b07.exceptions.UnauthorizedException;
 import com.b07.inventory.ShoppingCart;
 import com.b07.users.Customer;
-import com.b07.users.User;
-
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.sql.SQLException;
 
 public class CustomerMenu extends AppCompatActivity implements Serializable{
 
+    ShoppingCart superCart;
+    int customerId;
+    int accountId;
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                superCart = (ShoppingCart) data.getSerializableExtra("currentCart");
+                customerId = data.getIntExtra("customerId", 0);
+                accountId = data.getIntExtra("accountId", 0);
+                loadActivity();
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_menu);
-        Intent intent = getIntent();
-        final int customerId = intent.getIntExtra("customer", 0);
-        final ShoppingCart currentCart = (ShoppingCart)intent.getSerializableExtra("currentCart");
-        final int accountId = intent.getIntExtra("accountId", 0);
-        DatabaseDriverAndroid mydb = new DatabaseDriverAndroid(CustomerMenu.this);
-        Customer currentCustomer = new Customer(customerId, "Name", 60, "address");
+        firstTimeNeededFunctions();
+        loadActivity();
+    }
 
-        if (customerId != 0) {
-            Cursor customerDetails = mydb.getUserDetails(customerId);
-            customerDetails.moveToFirst();
-            currentCustomer = new Customer(customerId, customerDetails.getString(1), customerDetails.getInt(2), customerDetails.getString(3));
-            customerDetails.close();
-        }
-
-        TextView title = (TextView) findViewById(R.id.customerMain);
-        title.setText("Welcome to Ivy's Exotic Pet Store\nWelcome, "+ currentCustomer.getName());
-
-
+    private void loadActivity() {
         Button buttonAdd = (Button) findViewById(R.id.customerAddBtn);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CustomerMenu.this, AddToCart.class);
-                intent.putExtra("customerId", customerId);
-                intent.putExtra("cartForAdd", (Serializable) currentCart);
-                intent.putExtra("accountId", accountId);
-                startActivity(intent);
-                finish();
+                Intent i = new Intent(CustomerMenu.this, AddToCart.class);
+                i.putExtra("customerId", customerId);
+                i.putExtra("currentCart", (Serializable) superCart);
+                i.putExtra("accountId", accountId);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -60,12 +58,11 @@ public class CustomerMenu extends AppCompatActivity implements Serializable{
         buttonCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CustomerMenu.this, CheckCart.class);
-                intent.putExtra("customerId", customerId);
-                intent.putExtra("currentCart", (Serializable) currentCart);
-                intent.putExtra("accountId", accountId);
-                startActivity(intent);
-                finish();
+                Intent i = new Intent(CustomerMenu.this, ViewInventory.class);
+                i.putExtra("customerId", customerId);
+                i.putExtra("currentCart", (Serializable) superCart);
+                i.putExtra("accountId", accountId);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -73,25 +70,11 @@ public class CustomerMenu extends AppCompatActivity implements Serializable{
         buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CustomerMenu.this, RemoveFromCart.class);
-                intent.putExtra("customerId", customerId);
-                intent.putExtra("currentCart", (Serializable) currentCart);
-                intent.putExtra("accountId", accountId);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        Button buttonPrice = (Button) findViewById(R.id.customerTotalPriceBtn);
-        buttonPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CustomerMenu.this, CheckPrice.class);
-                intent.putExtra("customerId", customerId);
-                intent.putExtra("currentCart", (Serializable) currentCart);
-                intent.putExtra("accountId", accountId);
-                startActivity(intent);
-                finish();
+                Intent i = new Intent(CustomerMenu.this, RemoveFromCart.class);
+                i.putExtra("customerId", customerId);
+                i.putExtra("currentCart", (Serializable) superCart);
+                i.putExtra("accountId", accountId);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -99,12 +82,11 @@ public class CustomerMenu extends AppCompatActivity implements Serializable{
         buttonCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CustomerMenu.this, CheckOut.class);
-                intent.putExtra("customerId", customerId);
-                intent.putExtra("currentCart", (Serializable) currentCart);
-                intent.putExtra("accountId", accountId);
-                startActivity(intent);
-                finish();
+                Intent i = new Intent(CustomerMenu.this, CheckOut.class);
+                i.putExtra("customerId", customerId);
+                i.putExtra("currentCart", (Serializable) superCart);
+                i.putExtra("accountId", accountId);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -112,12 +94,11 @@ public class CustomerMenu extends AppCompatActivity implements Serializable{
         buttonRequestToSell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CustomerMenu.this, RequestToSell.class);
-                intent.putExtra("customerId", customerId);
-                intent.putExtra("currentCart", (Serializable) currentCart);
-                intent.putExtra("accountId", accountId);
-                startActivity(intent);
-                finish();
+                Intent i = new Intent(CustomerMenu.this, RequestToSell.class);
+                i.putExtra("customerId", customerId);
+                i.putExtra("currentCart", (Serializable) superCart);
+                i.putExtra("accountId", accountId);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -125,12 +106,11 @@ public class CustomerMenu extends AppCompatActivity implements Serializable{
         buttonRequestAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CustomerMenu.this, RequestAccount.class);
-                intent.putExtra("customerId", customerId);
-                intent.putExtra("currentCart", (Serializable) currentCart);
-                intent.putExtra("accountId", accountId);
-                startActivity(intent);
-                finish();
+                Intent i = new Intent(CustomerMenu.this, RequestAccount.class);
+                i.putExtra("customerId", customerId);
+                i.putExtra("currentCart", (Serializable) superCart);
+                i.putExtra("accountId", accountId);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -143,5 +123,17 @@ public class CustomerMenu extends AppCompatActivity implements Serializable{
                 finish();
             }
         });
+    }
+
+    private void firstTimeNeededFunctions() {
+        setContentView(R.layout.activity_customer_menu);
+        Intent intent = getIntent();
+
+        superCart = (ShoppingCart) intent.getSerializableExtra("currentCart");
+        customerId = intent.getIntExtra("customerId", 0);
+        accountId = intent.getIntExtra("accountId", 0);
+
+        TextView title = (TextView) findViewById(R.id.customerMain);
+        title.setText("Welcome to Ivy's Exotic Pet Store, "+ superCart.getCustomer().getName());
     }
 }

@@ -1,11 +1,12 @@
 package com.b07.store;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import com.b07.inventory.Item;
 import com.b07.users.User;
 
-public interface Sale {
+public interface Sale extends Serializable {
 
   /**
    * Return the sales Id.
@@ -45,7 +46,7 @@ public interface Sale {
   /**
    * Set the total price of the sale.
    * 
-   * @param totalPrice
+   * @param price
    */
   public void setTotalPrice(BigDecimal price);
 
@@ -63,4 +64,17 @@ public interface Sale {
    */
   public void setItemMap(HashMap<Item, Integer> itemMap);
 
+  /**
+   * Get Id of item in sale
+   *
+   * @return itemId
+   */
+  public int getItemId();
+
+  /**
+   * Get # of items in sale
+   *
+   * @return quantity
+   */
+  public int getQuantity();
 }

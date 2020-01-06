@@ -1,23 +1,31 @@
 package com.example.teambriancanweswitchourname;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.b07.inventory.EmployeeInterface;
+import com.b07.inventory.Inventory;
 import com.b07.inventory.Item;
 import com.b07.security.PasswordHelpers;
 import com.b07.store.ItemImpl;
+import com.b07.users.Employee;
 import com.example.teambriancanweswitchourname.R;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 
 public class Restock extends AppCompatActivity {
 
-    DatabaseDriverAndroid mydb = new DatabaseDriverAndroid(Restock.this);
+    Employee currentEmployee;
+    EmployeeInterface currentInterface;
+    Inventory currentInventory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +35,13 @@ public class Restock extends AppCompatActivity {
         requestSellBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                DatabaseDriverAndroid mydb = new DatabaseDriverAndroid(Restock.this);
+                Intent intent = getIntent();
+                currentEmployee = (Employee) intent.getSerializableExtra("Employee");
+                currentInterface = (EmployeeInterface) intent.getSerializableExtra("Interface");
+                currentInventory = (Inventory) intent.getSerializableExtra("Inventory");
+
                 EditText ItemName = (EditText)findViewById(R.id.RestockItem);
                 String ItemNameCleaned = ItemName.getText().toString();
 
@@ -47,11 +62,37 @@ public class Restock extends AppCompatActivity {
                 }
 
                 if (temp!=null) {
-                    mydb.insertInventory(temp.getId(), ItemQuantityCleaned);
-                    new MaterialAlertDialogBuilder(Restock.this).setMessage("Restock succeeded.").setPositiveButton("Ok", null).show();
+                    boolean succeed = false;
+                    boolean succeed2 = false;
+                    try {
+                        succeed = currentInterface.restockInventory(temp, ItemQuantityCleaned, mydb);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    if (succeed) {
+                        succeed2 = currentInventory.updateMap(temp, ItemQuantityCleaned);
+                    }
+                    if (succeed && succeed2) {
+                        new MaterialAlertDialogBuilder(Restock.this).setMessage("Restock succeeded.").setPositiveButton("Ok", null).show();
+                    } else {
+                        new MaterialAlertDialogBuilder(Restock.this).setMessage("Restock failed. Entered a negative value greater than amount available in store.").setPositiveButton("Ok", null).show();
+                    }
                 } else {
                     new MaterialAlertDialogBuilder(Restock.this).setMessage("Restock failed. Item does not exist in store.").setPositiveButton("Ok", null).show();
                 }
+            }
+        });
+
+        Button buttonBack = (Button) findViewById(R.id.backButton);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("Employee", currentEmployee);
+                intent.putExtra("Interface", currentInterface);
+                intent.putExtra("Inventory", currentInventory);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }

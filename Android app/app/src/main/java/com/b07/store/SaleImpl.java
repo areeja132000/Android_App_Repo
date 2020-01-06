@@ -1,5 +1,6 @@
 package com.b07.store;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import com.b07.inventory.Item;
@@ -9,11 +10,10 @@ import com.b07.users.User;
  * This class allows for instantiation of a Sale object.
  *
  */
-public class SaleImpl implements Sale {
+public class SaleImpl implements Sale, Serializable {
 
-    int id;
     int saleId;
-    int userId;
+    int itemId;
     int quantity;
     User user;
     BigDecimal totalPrice;
@@ -22,38 +22,38 @@ public class SaleImpl implements Sale {
     /**
      * This constructor created a sale that has an ID, user, and totalPrice associated with it.
      *
-     * @param id
+     * @param saleId
      * @param user
      * @param totalPrice
      */
-    public SaleImpl(int id, User user, BigDecimal totalPrice) {
-        this.id = id;
+    public SaleImpl(int saleId, User user, BigDecimal totalPrice) {
+        this.saleId = saleId;
         this.user = user;
         this.totalPrice = totalPrice;
     }
 
     /**
-     * his constructor created a sale that has an ID, user ID, and quantity of item sold associated
+     * his constructor created a sale that has an ID, item ID, and quantity of item sold associated
      * with it.
      *
      * @param saleId
-     * @param userId
+     * @param itemId
      * @param quantity
      */
-    public SaleImpl(int saleId, int userId, int quantity) {
+    public SaleImpl(int saleId, int itemId, int quantity) {
         this.saleId = saleId;
-        this.userId = userId;
+        this.itemId = itemId;
         this.quantity = quantity;
     }
 
     @Override
     public int getId() {
-        return id;
+        return saleId;
     }
 
     @Override
     public void setId(int id) {
-        this.id = id;
+        this.saleId = id;
     }
 
     @Override
@@ -85,4 +85,10 @@ public class SaleImpl implements Sale {
     public void setItemMap(HashMap<Item, Integer> itemMap) {
         this.itemMap = itemMap;
     }
+
+    @Override
+    public int getItemId() { return itemId; }
+
+    @Override
+    public int getQuantity () { return quantity; }
 }

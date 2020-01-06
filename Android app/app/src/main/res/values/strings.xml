@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">TeamBrianCanWeSwitchOurName Shopping App</string>
+    <string name="app_name">Ivy\'s Shopping App</string>
 
     <!-- Strings related to the login page -->
-    <string name="login_title">Welcome! Please log in or register.</string>
+    <string name="login_title">Welcome! Please log in.</string>
     <string name="login_id">Enter ID</string>
     <string name="login_password">Enter Password</string>
     <string name="login_login_button">Login</string>
@@ -10,6 +10,9 @@
 
     <string name="logout">Logout</string>
     <string name="back">Back</string>
+
+    <!-- Strings related to the initializing the app -->
+    <string name="go_to_login">Go to Login Menu</string>
 
     <!-- Strings related to the create customer/employee account page -->
     <string name="create_cust_acc_title">Register As A Customer</string>
@@ -30,7 +33,7 @@
     <string name="admin_active">View active accounts</string>
 
     <!-- Strings related to request account page -->
-    <string name="RequestAcctTitle">Request Account</string>
+    <string name="RequestAcctTitle">\t\t\t\t\t\t\t\t\t\tRequest Account:\n\nPlease press the button to request an account. Your accoutId will show up at the bottom.</string>
     <string name="RequestAcct">Please pass to employee for verification</string>
     <string name="RequestAcctBtn">Request Account</string>
     <string name="RequestAcctCustomerId">Customer Id</string>
@@ -76,9 +79,8 @@
     <string name="employee_restock_toast">The item has been successfully restocked.</string>
 
     <!-- Strings related to the customer page -->
-    <string name="customer_main_title">Welcome to our shop!\n What would you like to do?</string>
+    <string name="customer_main_title">Welcome to our shop!\nWhat would you like to do?</string>
     <string name="customer_main_cart_btn">View your cart</string>
-    <string name="customer_main_check_price_btn">Check the total Price</string>
     <string name="customer_main_remove_item_btn">Remove from cart</string>
     <string name="customer_main_req_sell_btn">Request to become a seller</string>
     <string name="customer_main_checkout_btn">Checkout</string>
@@ -95,10 +97,10 @@
     <string name="customer_item_price">Price: </string>
     <string name="customer_success_add_toast">The item(s) have been successfully added to your cart!</string>
     <string name="customer_fail_add_toast">Item wasn\'t added to your cart! Please check our stock!</string>
-    <string name="customer_cart_btn">View Cart</string>
-    <string name="customer_checkout">Checkout</string>
+    <string name="customer_cart_btn">View Items in Stock</string>
+    <string name="customer_checkout">View Cart and Checkout</string>
 
-    <string name="customer_check_cart_title">View Your Cart</string>
+    <string name="customer_check_cart_title">Items In Stock and Prices</string>
 
     <string name="customer_check_price_title">Check total price of Cart</string>
     <string name="customer_check_price_btn">Check Price</string>

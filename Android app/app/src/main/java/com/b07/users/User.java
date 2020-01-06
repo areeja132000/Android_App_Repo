@@ -2,11 +2,12 @@ package com.b07.users;
 
 import android.content.Context;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import com.b07.security.PasswordHelpers;
 import com.example.teambriancanweswitchourname.DatabaseDriverAndroid;
 
-public abstract class User extends Context {
+public abstract class User implements Serializable {
 
   private int id;
   private String name;

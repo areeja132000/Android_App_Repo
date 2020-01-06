@@ -32,6 +32,8 @@ import java.util.List;
 
 public class AddToCart extends AppCompatActivity implements Serializable {
 
+    int customerId;
+    int accountId;
     ShoppingCart currentCart;
 
     @Override
@@ -39,9 +41,9 @@ public class AddToCart extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_cart);
         final Intent intent = getIntent();
-        final int customerId = intent.getIntExtra("customerId", 0);
-        final int accountId = intent.getIntExtra("accountId", 0);
-
+        customerId = intent.getIntExtra("customerId", 0);
+        accountId = intent.getIntExtra("accountId", 0);
+        currentCart = (ShoppingCart)intent.getSerializableExtra("currentCart");
 
         Button buttonOne = (Button) findViewById(R.id.addBtn);
         buttonOne.setOnClickListener(new View.OnClickListener() {
@@ -55,14 +57,6 @@ public class AddToCart extends AppCompatActivity implements Serializable {
 
                 EditText addQuantityInput = (EditText) findViewById(R.id.addQuantity);
                 int addQuantity = Integer.parseInt(addQuantityInput.getText().toString());
-                ShoppingCart currentCart = (ShoppingCart)intent.getSerializableExtra("cartToAdd");
-                try {
-                    currentCart = new ShoppingCart(new Customer(0,"", 0, ""));
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (UnauthorizedException e) {
-                    e.printStackTrace();
-                }
 
                 //Cursor to Items table
                 Cursor allItems = mydb.getAllItems();
@@ -76,10 +70,10 @@ public class AddToCart extends AppCompatActivity implements Serializable {
                     allItems.moveToNext();
                 }
                 allItems.close();
+
                 try {
-                    new MaterialAlertDialogBuilder(AddToCart.this).setMessage("Before you had \n"+ currentCart.displayCart()).setPositiveButton("Ok", null).show();
                     currentCart.addItem(temp, addQuantity);
-                    new MaterialAlertDialogBuilder(AddToCart.this).setMessage("Now have \n"+ currentCart.displayCart()).setPositiveButton("Ok", null).show();
+                    new MaterialAlertDialogBuilder(AddToCart.this).setMessage("Your cart now:\n"+ currentCart.displayCart()).setPositiveButton("Ok", null).show();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (NotEnoughResourcesException e) {
@@ -94,11 +88,11 @@ public class AddToCart extends AppCompatActivity implements Serializable {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddToCart.this, CustomerMenu.class);
+                Intent intent = new Intent();
                 intent.putExtra("customerId", customerId);
                 intent.putExtra("currentCart", currentCart);
                 intent.putExtra("accountId", accountId);
-                startActivity(intent);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });

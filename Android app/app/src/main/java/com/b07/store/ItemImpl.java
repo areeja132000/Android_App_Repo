@@ -2,13 +2,14 @@ package com.b07.store;
 
 import com.b07.inventory.Item;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Allows object of type ItemImpl to be instantiated.
  *
  */
-public class ItemImpl implements Item {
+public class ItemImpl implements Item, Serializable {
 
   int id;
   String name;

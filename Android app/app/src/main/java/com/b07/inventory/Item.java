@@ -1,8 +1,9 @@
 package com.b07.inventory;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public interface Item {
+public interface Item extends Serializable {
 
   /**
    * Returns the items Id.

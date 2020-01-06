@@ -72,6 +72,5 @@ public class ViewBooks {
       System.out.println("Number " + currentItem.getKey() + " Sold: " + currentItem.getValue());
     }
     System.out.println("TOTAL SALES: " + totalRevenue);
-
   }
 }
