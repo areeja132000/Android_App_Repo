@@ -1,5 +1,8 @@
 package com.b07.inventory;
 
+import android.database.Cursor;
+
+import java.io.Serializable;
 import java.sql.SQLException;
 import com.b07.exceptions.DatabaseInsertException;
 import com.b07.users.Customer;
@@ -10,24 +13,9 @@ import com.example.teambriancanweswitchourname.DatabaseDriverAndroid;
  * Tasks that employees carry out and need to be carried out for employee.
  *
  */
-public class EmployeeInterface {
+public class EmployeeInterface implements Serializable {
   private Employee currentEmployee;
   private Inventory inventory;
-
-  /**
-   * Creates a new employee interface for employee use. If password is authenticated.
-   * 
-   * @param employee inventory.
-   */
-  public EmployeeInterface(Employee employee, Inventory inventory, DatabaseDriverAndroid mydb) throws SQLException {
-    if (employee != null && inventory != null) {
-      String password = mydb.getPassword(employee.getId());
-      boolean authenicated = employee.authenticate(password, mydb);
-      if (authenicated) {
-        this.inventory = inventory;
-      }
-    }
-  }
 
   /**
    * Creates a new employee interface for employee use.
@@ -44,13 +32,7 @@ public class EmployeeInterface {
    * @param employee
    */
   public void setCurrentEmployee(Employee employee, DatabaseDriverAndroid mydb) throws SQLException {
-    if (employee != null) {
-      String password = mydb.getPassword(employee.getId());
-      boolean authenicated = employee.authenticate(password, mydb);
-      if (authenicated) {
-        currentEmployee = employee;
-      }
-    }
+    this.currentEmployee = employee;
   }
 
   /**
@@ -68,14 +50,15 @@ public class EmployeeInterface {
    */
   public boolean restockInventory(Item item, int quantity, DatabaseDriverAndroid mydb) throws SQLException {
     int itemId = item.getId();
+    int oldQuantity;
+    boolean complete = false;
     try {
-      mydb.getInventoryQuantity(item.getId());
+      oldQuantity = mydb.getInventoryQuantity(item.getId());
+      complete = mydb.updateInventoryQuantity((oldQuantity + quantity), itemId);
     } catch (Exception SQLException) {
-      System.out.println("This item does not exist in this store.");
-      return false;
+      mydb.insertInventory(item.getId(), quantity);
+      return true;
     }
-    int newQuantity = mydb.getInventoryQuantity(item.getId()) + quantity;
-    boolean complete = mydb.updateInventoryQuantity(newQuantity, itemId);
     return complete;
   }
 
@@ -87,9 +70,22 @@ public class EmployeeInterface {
    */
   public int createCustomer(String name, int age, String address, String password, DatabaseDriverAndroid mydb)
       throws DatabaseInsertException, SQLException {
-    int customerId = (int) mydb.insertNewUser(name, age, address, password);
-    new Customer(customerId, name, age, address);
-    return customerId;
+    int customerId = Math.toIntExact(mydb.insertNewUser(name, age, address, password));
+    Cursor roles = mydb.getRoles();
+    roles.moveToFirst();
+    int roleId =0;
+    while (!roles.isAfterLast()) {
+      if (roles.getString(1).equals("CUSTOMER")) {
+        roleId = roles.getInt(0);
+      }
+      roles.moveToNext();
+    }
+    roles.close();
+    if (roleId != 0) {
+      mydb.insertUserRole(customerId, roleId);
+      return customerId;
+    }
+    return -1;
   }
 
   /**
@@ -100,8 +96,21 @@ public class EmployeeInterface {
    */
   public int createEmployee(String name, int age, String address, String password, DatabaseDriverAndroid mydb)
       throws DatabaseInsertException, SQLException {
-    int employeeId = (int) mydb.insertNewUser(name, age, address, password);
-    new Customer(employeeId, name, age, address);
-    return employeeId;
+    int employeeId = Math.toIntExact(mydb.insertNewUser(name, age, address, password));
+    Cursor roles = mydb.getRoles();
+    roles.moveToFirst();
+    int roleId =0;
+    while (!roles.isAfterLast()) {
+      if (roles.getString(1).equals("EMPLOYEE")) {
+        roleId = roles.getInt(0);
+      }
+      roles.moveToNext();
+    }
+    roles.close();
+    if (roleId != 0) {
+      mydb.insertUserRole(employeeId, roleId);
+      return employeeId;
+    }
+    return -1;
   }
 }

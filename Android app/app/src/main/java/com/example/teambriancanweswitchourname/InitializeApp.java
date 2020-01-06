@@ -3,6 +3,7 @@ package com.example.teambriancanweswitchourname;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,8 +51,20 @@ public class InitializeApp extends AppCompatActivity {
                 EditText password = (EditText)findViewById(R.id.adminPassword);
                 String passwordFinal = password.getText().toString();
 
+                Cursor allRoles = mydb.getRoles();
+                allRoles.moveToFirst();
+                int adminRoleId = 0;
+
+                while (!allRoles.isAfterLast()) {
+                    if (allRoles.getString(1).equals("ADMIN")){
+                        adminRoleId = allRoles.getInt(0);
+                    }
+                    allRoles.moveToNext();
+                }
+                allRoles.close();
+
                 int adminId = Math.toIntExact(mydb.insertNewUser(nameFinal, ageFinal, addressFinal, passwordFinal));
-                mydb.insertUserRole(adminId, 2);
+                mydb.insertUserRole(adminId, adminRoleId);
 
                 new MaterialAlertDialogBuilder(InitializeApp.this).setMessage("You have create an Administrator with id " +adminId+
                         " . Thank you.").setPositiveButton("Ok", null).show();
@@ -76,8 +89,20 @@ public class InitializeApp extends AppCompatActivity {
                 EditText password = (EditText)findViewById(R.id.employPass);
                 String passwordFinal = password.getText().toString();
 
+                Cursor allRoles = mydb.getRoles();
+                allRoles.moveToFirst();
+                int employeeRoleId = 0;
+
+                while (!allRoles.isAfterLast()) {
+                    if (allRoles.getString(1).equals("EMPLOYEE")){
+                        employeeRoleId = allRoles.getInt(0);
+                    }
+                    allRoles.moveToNext();
+                }
+                allRoles.close();
+
                 int employId = Math.toIntExact(mydb.insertNewUser(nameFinal, ageFinal, addressFinal, passwordFinal));
-                mydb.insertUserRole(employId, 1);
+                mydb.insertUserRole(employId, employeeRoleId);
 
                 new MaterialAlertDialogBuilder(InitializeApp.this).setMessage("You have create an Employee with id " + employId+
                         " . Thank you.").setPositiveButton("Ok", null).show();

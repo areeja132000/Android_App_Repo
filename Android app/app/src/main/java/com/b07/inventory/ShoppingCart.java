@@ -26,7 +26,7 @@ public class ShoppingCart implements Serializable {
   private static final BigDecimal TAXRATE = new BigDecimal("1.13");
 
   public ShoppingCart(Customer customer) throws SQLException, UnauthorizedException {
-    items = new HashMap<Item, Integer>();
+    this.items = new HashMap<Item, Integer>();
     this.customer = customer;
   }
 
@@ -176,12 +176,10 @@ public class ShoppingCart implements Serializable {
     int value = 0;
     Item key;
     String Items = "";
-    Items = Items + ("Here is your current cart:\n");
     for (HashMap.Entry<Item, Integer> entry : items.entrySet()) {
       value = entry.getValue();
       key = entry.getKey();
-      Items = Items + (key.getName() + ": " + value + " " + "Price: " + key.getPrice() + "$ * "
-          + value + " = " + key.getPrice().multiply(new BigDecimal(value)) + "$");
+      Items = Items + (key.getName() + ": " + value + " " + "Price: $" + key.getPrice() +" * "+ value + " = $" + key.getPrice().multiply(new BigDecimal(value)) + "\n");
     }
     return Items;
   }

@@ -14,7 +14,7 @@ import com.example.teambriancanweswitchourname.DatabaseDriverAndroid;
  */
 public class StoreInitializer {
 
-  /** Fully initializes the starting users and database. SHould only be called if no database currently exists
+  /** Fully initializes the starting users and database. Should only be called if no database currently exists
    * @throws DatabaseInsertException
    * @throws SQLException
    * @throws NumberFormatException
@@ -23,7 +23,6 @@ public class StoreInitializer {
   public static void fullInitialize(DatabaseDriverAndroid mydb) throws DatabaseInsertException, SQLException, NumberFormatException, IOException {
     addRoleDatabase(mydb);
     addItemDatabase(mydb);
-
   }
   
   /**

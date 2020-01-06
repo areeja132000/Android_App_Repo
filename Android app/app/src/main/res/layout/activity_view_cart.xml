@@ -7,16 +7,16 @@
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    tools:context=".ViewActiveAccounts">
+    tools:context=".ViewInventory">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/ViewText19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="30dp"
-        android:text="@string/admin_inactive_title"
+        android:text="@string/customer_check_cart_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <ScrollView
@@ -33,20 +33,20 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/inactiveOutput"
+                android:id="@+id/displayCart"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="TextView"></TextView>
+                android:text="TextView"/>
 
         </LinearLayout>
     </ScrollView>
 
     <Button
-        android:id="@+id/backButton"
+        android:id="@+id/backBtn"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
         android:text="@string/back" />
 
 </LinearLayout>

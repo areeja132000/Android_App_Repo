@@ -1,6 +1,8 @@
 package com.b07.inventory;
 
 import java.util.HashMap;
+import java.util.Map;
+import static java.lang.Math.abs;
 
 /**
  * Inventory of store.
@@ -31,8 +33,27 @@ public class CurrentInventory implements Inventory {
   }
 
   @Override
-  public void updateMap(Item item, Integer value) {
-
+  public boolean updateMap(Item item, Integer value) {
+    boolean success = false;
+    if (!this.ItemMap.containsKey(item)) {
+      this.ItemMap.put(item, value);
+      return true;
+    } else {
+      for (Map.Entry<Item, Integer> mapElement : this.ItemMap.entrySet()) {
+        Item currentItem = mapElement.getKey();
+        if (item == currentItem) {
+          int quantity = (int) mapElement.getValue();
+          if (value < 0 && abs(value) < quantity) {
+            this.ItemMap.replace(item, value + quantity);
+            return true;
+          } else if (value >= 0) {
+            this.ItemMap.replace(item, value + quantity);
+            return true;
+          }
+        }
+      }
+    }
+    return success;
   }
 
   @Override

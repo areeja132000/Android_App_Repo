@@ -10,9 +10,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.b07.inventory.Item;
+import com.b07.inventory.ItemImpl;
 import com.b07.store.Sale;
 import com.b07.store.SaleImpl;
+import com.b07.users.Admin;
+import com.b07.users.Customer;
 import com.b07.users.ItemTypes;
+import com.b07.users.User;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,28 +26,47 @@ import java.util.Map;
 
 public class ViewBooksAdmin extends AppCompatActivity {
 
-    DatabaseDriverAndroid mydb = new DatabaseDriverAndroid(ViewBooksAdmin.this);
+    Admin currentAdmin;
 
-    /*    Cursor adminDetails = mydb.getUserDetails(adminId);
-            adminDetails.moveToFirst();
-        currentAdmin = new Admin(adminId, adminDetails.getString(1),
-                    adminDetails.getInt(2), adminDetails.getString(3));*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_books);
 
+        DatabaseDriverAndroid mydb = new DatabaseDriverAndroid(ViewBooksAdmin.this);
+        Intent intent = getIntent();
+        currentAdmin = (Admin) intent.getSerializableExtra("adminUser");
+
         //Cursor to Itemized Sales table
         Cursor allItemSales = mydb.getItemizedSales();
         allItemSales.moveToFirst();
 
-        //Array list of all sales
+        //Array list of all Itemized sales
         ArrayList<Sale> allSales = new ArrayList<Sale>();
         while (!allItemSales.isAfterLast()) {
-            Sale temp = new SaleImpl(allItemSales.getInt(1), allItemSales.getInt(2), allItemSales.getInt(3));
+            Sale temp = new SaleImpl(allItemSales.getInt(0), allItemSales.getInt(1), allItemSales.getInt(2));
             allSales.add(temp);
             allItemSales.moveToNext();
         }
+        allItemSales.close();
+
+        //Cursor to Sales table
+        Cursor sales = mydb.getSales();
+        sales.moveToFirst();
+
+        //Array list of all sales
+        ArrayList<Sale> everySale = new ArrayList<Sale>();
+        while (!sales.isAfterLast()) {
+            Cursor toUserDetails = mydb.getUserDetails(sales.getInt(1));
+            toUserDetails.moveToFirst();
+            User currentUser = new Customer(toUserDetails.getInt(0), toUserDetails.getString(1), toUserDetails.getInt(2), toUserDetails.getString(3));
+            toUserDetails.close();
+            Sale temp = new SaleImpl(sales.getInt(0), currentUser, new BigDecimal(sales.getString(2)));
+            everySale.add(temp);
+            sales.moveToNext();
+        }
+
+        sales.close();
 
         BigDecimal totalRevenue = new BigDecimal("0.00");
 
@@ -56,9 +79,11 @@ public class ViewBooksAdmin extends AppCompatActivity {
             itemNameToTotal.put(item.toString(), 0);
         }
 
-        for (int i = 0; i < allSales.size(); i++) {
+
+
+        for (int i = 0; i < everySale.size(); i++) {
             // Get both the items version and non-item version of the sale
-            Sale itemizedSale = allSales.get(i);
+            Sale itemizedSale = everySale.get(i);
 
             // Print out requirements
             addOn = addOn + ("Customer: " + itemizedSale.getUser().getName() + "\n");
@@ -68,22 +93,26 @@ public class ViewBooksAdmin extends AppCompatActivity {
             totalRevenue = totalRevenue.add(itemizedSale.getTotalPrice());
 
             // Get the item map of the sale
-            HashMap<Item, Integer> ItemToQuantity = itemizedSale.getItemMap();
+            for (int m = 0; m < allSales.size(); m++) {
+                int x=0;
+                if (allSales.get(m).getId() == itemizedSale.getId()) {
+                    Sale temp = allSales.get(m);
 
-            Iterator<Map.Entry<Item, Integer>> ItemMapsToQuantity = ItemToQuantity.entrySet().iterator();
-            // Get the first item in sale and print it out
-            Map.Entry<Item, Integer> entry = ItemMapsToQuantity.next();
-            addOn = addOn + ("Itemized Breakdown: " + entry.getKey().getName() + ": " + entry.getValue() +"\n");
-            // Update hashmap that stores total number of item sold
-            itemNameToTotal.put(entry.getKey().getName(),
-                    itemNameToTotal.get(entry.getKey().getName()) + entry.getValue());
-            // Print out the rest of the items
-            while (ItemMapsToQuantity.hasNext()) {
-                Map.Entry<Item, Integer> mapElement = ItemMapsToQuantity.next();
-                System.out.println("                    " + mapElement.getKey().getName() + ": " + mapElement.getValue());
-                // Update hashmap that stores total number of item sold
-                itemNameToTotal.put(mapElement.getKey().getName(),
-                        itemNameToTotal.get(mapElement.getKey().getName()) + mapElement.getValue());
+                    Cursor pointerAtItem = mydb.getItem(temp.getItemId());
+                    pointerAtItem.moveToFirst();
+                    Item currentItem = new ItemImpl(pointerAtItem.getInt(0), pointerAtItem.getString(1), new BigDecimal(pointerAtItem.getString(2)));
+                    pointerAtItem.close();
+
+                    if (x == 0) {
+                        addOn = addOn + ("Itemized Breakdown: " + currentItem.getName() + ": " + temp.getQuantity() +"\n");
+                        itemNameToTotal.put(currentItem.getName(), itemNameToTotal.get(currentItem.getName()) + temp.getQuantity());
+                        x++;
+                    } else {
+                        addOn = addOn + ("                    " + currentItem.getName() + ": " + temp.getQuantity() + "\n");
+                        itemNameToTotal.put(currentItem.getName(), itemNameToTotal.get(currentItem.getName()) + temp.getQuantity());
+                    }
+                }
+
             }
             addOn = addOn + ("----------------------------------------------------" +"\n");
         }
@@ -102,9 +131,11 @@ public class ViewBooksAdmin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewBooksAdmin.this, AdminPanel.class);
+                intent.putExtra("admin", currentAdmin.getId());
                 startActivity(intent);
                 finish();
             }
         });
+
     }
 }

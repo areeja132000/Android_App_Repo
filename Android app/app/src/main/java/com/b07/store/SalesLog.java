@@ -1,12 +1,13 @@
 package com.b07.store;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * This class keeps logs of different types of sales.
  *
  */
-public class SalesLog {
+public class SalesLog implements Serializable {
 
   ArrayList<Sale> allSales = new ArrayList<Sale>();
 

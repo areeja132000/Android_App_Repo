@@ -1,8 +1,9 @@
 package com.b07.inventory;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public interface Inventory {
+public interface Inventory extends Serializable {
 
   /**
    * Returns the item map from item to quantity.
@@ -23,7 +24,7 @@ public interface Inventory {
    * 
    * @param item, value
    */
-  public void updateMap(Item item, Integer value);
+  public boolean updateMap(Item item, Integer value);
 
   /**
    * Returns total amount of items.

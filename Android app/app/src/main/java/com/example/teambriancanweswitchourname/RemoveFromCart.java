@@ -33,18 +33,20 @@ import java.util.List;
 public class RemoveFromCart extends AppCompatActivity implements Serializable {
 
     ShoppingCart currentCart;
+    int customerId;
+    int accountId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_from_cart);
-        final Intent intent = getIntent();
-        final int customerId = intent.getIntExtra("customerId", 0);
-        final int accountId = intent.getIntExtra("accountId", 0);
+        Intent intent = getIntent();
+        customerId = intent.getIntExtra("customerId", 0);
+        accountId = intent.getIntExtra("accountId", 0);
+        currentCart = (ShoppingCart)intent.getSerializableExtra("currentCart");
 
-
-        Button buttonOne = (Button) findViewById(R.id.removeBtn);
-        buttonOne.setOnClickListener(new View.OnClickListener() {
+        Button removeButton = (Button) findViewById(R.id.removeBtn);
+        removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -55,15 +57,6 @@ public class RemoveFromCart extends AppCompatActivity implements Serializable {
 
                 EditText removeQuantityInput = (EditText) findViewById(R.id.removeQuantity);
                 int removeQuantity = Integer.parseInt(removeQuantityInput.getText().toString());
-
-                ShoppingCart currentCart = (ShoppingCart)intent.getSerializableExtra("currentCart");
-                try {
-                    currentCart = new ShoppingCart(new Customer(0,"", 0, ""));
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (UnauthorizedException e) {
-                    e.printStackTrace();
-                }
 
                 //Cursor to Items table
                 Cursor allItems = mydb.getAllItems();
@@ -78,7 +71,7 @@ public class RemoveFromCart extends AppCompatActivity implements Serializable {
                 }
                 try {
                     currentCart.removeItem(temp, removeQuantity);
-                    new MaterialAlertDialogBuilder(RemoveFromCart.this).setMessage("Now have \n"+ currentCart.displayCart()).setPositiveButton("Ok", null).show();
+                    new MaterialAlertDialogBuilder(RemoveFromCart.this).setMessage("Your cart now:\n"+ currentCart.displayCart()).setPositiveButton("Ok", null).show();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (NotEnoughResourcesException e) {
@@ -87,44 +80,21 @@ public class RemoveFromCart extends AppCompatActivity implements Serializable {
                     e.printStackTrace();
                 }
 
-                Button buttonBack = (Button) findViewById(R.id.backBtn);
-                final ShoppingCart finalCurrentCart = currentCart;
-                buttonBack.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(RemoveFromCart.this, CustomerMenu.class);
-                        intent.putExtra("customerId", customerId);
-                        intent.putExtra("currentCart", finalCurrentCart);
-                        intent.putExtra("accountId", accountId);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
+            }
+        });
 
-
+        Button buttonBack = (Button) findViewById(R.id.backBtn);
+        final ShoppingCart finalCurrentCart = currentCart;
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("customerId", customerId);
+                intent.putExtra("currentCart", currentCart);
+                intent.putExtra("accountId", accountId);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }
-
-
 }
-/*            Intent intent = getIntent();
-            currentCart = (ShoppingCart)intent.getSerializableExtra("cartForAdd");
-            Spinner spinner = (Spinner)findViewById(R.id.spinnerOfItems);
-            DatabaseDriverAndroid mydb = new DatabaseDriverAndroid(RemoveFromCart.this);
-            populateSpinnerFromDatabase(mydb, spinner);
-        }
-
-    public void populateSpinnerFromDatabase(DatabaseDriverAndroid mydb, Spinner spinner){
-
-        Cursor items = mydb.getAllItems();
-        List<String> itemList= new ArrayList<String>();
-        while (items.moveToNext()){
-            itemList.add(items.getString(1));
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.text, itemList);
-        adapter.setDropDownViewResource(android.R.layout.);
-        spinner.setAdapter(adapter);
-    }
-}*/
-

@@ -21,28 +21,23 @@ import java.sql.SQLException;
 public class RequestToSell extends AppCompatActivity {
 
     ShoppingCart currentCart;
-    DatabaseDriverAndroid mydb = new DatabaseDriverAndroid(RequestToSell.this);
+    int customerId;
+    int accountId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_to_sell);
         Intent intent = getIntent();
-        final int customerId = intent.getIntExtra("customerId", 0);
-        final int accountId = intent.getIntExtra("accountId", 0);
-
+        customerId = intent.getIntExtra("customerId", 0);
+        accountId = intent.getIntExtra("accountId", 0);
         currentCart = (ShoppingCart)intent.getSerializableExtra("currentCart");
-        try {
-            currentCart = new ShoppingCart(new Customer(0,"", 0, ""));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (UnauthorizedException e) {
-            e.printStackTrace();
-        }
+
 
         Button requestSellBtn = (Button) findViewById(R.id.requestSell);
         requestSellBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseDriverAndroid mydb = new DatabaseDriverAndroid(RequestToSell.this);
                 EditText ItemName = (EditText)findViewById(R.id.ItemName);
                 String ItemNameCleaned = ItemName.getText().toString();
 
@@ -59,9 +54,8 @@ public class RequestToSell extends AppCompatActivity {
                 String EmployeePasswordCleaned = EmployeePassword.getText().toString();
 
                 String actualPass = mydb.getPassword(EmployeeIdCleaned);
-                String hashedEntered = PasswordHelpers.passwordHash(EmployeePasswordCleaned);
 
-                if (actualPass.equals(hashedEntered)) {
+                if (PasswordHelpers.comparePassword(actualPass, EmployeePasswordCleaned)) {
                     long ItemId = mydb.insertItem(ItemNameCleaned, new BigDecimal(""+ItemPriceCleaned));
                     mydb.insertInventory(Math.toIntExact(ItemId), ItemStockCleaned);
                     new MaterialAlertDialogBuilder(RequestToSell.this).setMessage("Authentication succeeded.\nYour item is now part of the stock.\nThank you.\n").setPositiveButton("Ok", null).show();
@@ -73,15 +67,14 @@ public class RequestToSell extends AppCompatActivity {
 
 
         Button buttonBack = (Button) findViewById(R.id.backBtn);
-        final ShoppingCart finalCurrentCart = currentCart;
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RequestToSell.this, CustomerMenu.class);
+                Intent intent = new Intent();
                 intent.putExtra("customerId", customerId);
-                intent.putExtra("currentCart", finalCurrentCart);
+                intent.putExtra("currentCart", currentCart);
                 intent.putExtra("accountId", accountId);
-                startActivity(intent);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
