@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.teambriancanweswitchourname">
+    package="com.example.SalesApp">
 
     <application
         android:allowBackup="true"
@@ -9,26 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RestoreAccount" />
-        <activity android:name=".InitializeApp" />
-        <activity android:name=".AdminPanel" />
-        <activity android:name=".RequestAccount" />
-        <activity android:name=".AddToCart" />
-        <activity android:name=".CheckOut" />
-        <activity android:name=".RequestToSell" />
-        <activity android:name=".RemoveFromCart" />
-        <activity android:name=".ViewInventory" />
-        <activity android:name=".Restock" />
-        <activity android:name=".MakeEmployee" />
-        <activity android:name=".MakeCustomer" />
-        <activity android:name=".CustomerMenu" />
-        <activity android:name=".EmployeePanel" />
-        <activity android:name=".ViewActiveAccounts" />
-        <activity android:name=".ViewInactiveAccounts" />
-        <activity android:name=".ViewBooksAdmin" />
-        <activity android:name=".AdminPromote" />
-        <activity android:name=".LoginPage" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.SalesApp.RestoreAccount" />
+        <activity android:name="com.example.SalesApp.InitializeApp" />
+        <activity android:name="com.example.SalesApp.AdminPanel" />
+        <activity android:name="com.example.SalesApp.RequestAccount" />
+        <activity android:name="com.example.SalesApp.AddToCart" />
+        <activity android:name="com.example.SalesApp.CheckOut" />
+        <activity android:name="com.example.SalesApp.RequestToSell" />
+        <activity android:name="com.example.SalesApp.RemoveFromCart" />
+        <activity android:name="com.example.SalesApp.ViewInventory" />
+        <activity android:name="com.example.SalesApp.Restock" />
+        <activity android:name="com.example.SalesApp.MakeEmployee" />
+        <activity android:name="com.example.SalesApp.MakeCustomer" />
+        <activity android:name="com.example.SalesApp.CustomerMenu" />
+        <activity android:name="com.example.SalesApp.EmployeePanel" />
+        <activity android:name="com.example.SalesApp.ViewActiveAccounts" />
+        <activity android:name="com.example.SalesApp.ViewInactiveAccounts" />
+        <activity android:name="com.example.SalesApp.ViewBooksAdmin" />
+        <activity android:name="com.example.SalesApp.AdminPromote" />
+        <activity android:name="com.example.SalesApp.LoginPage" />
+        <activity android:name="com.example.SalesApp.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
