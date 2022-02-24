@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
-    tools:context="com.example.pages.MakeEmployee">
+    tools:context=".MakeEmployee">
 
     <TextView
         android:id="@+id/textView2"

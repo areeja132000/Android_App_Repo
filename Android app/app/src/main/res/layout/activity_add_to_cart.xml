@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    tools:context="com.example.pages.AddToCart">
+    tools:context=".AddToCart">
 
     <TextView
         android:id="@+id/textView13"

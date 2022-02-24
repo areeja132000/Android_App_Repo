@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
-    tools:context="com.example.pages.AdminPanel">
+    tools:context=".AdminPanel">
 
     <TextView
         android:id="@+id/adminMain"
