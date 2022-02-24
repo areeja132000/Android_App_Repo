@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ivy\'s Shopping App</string>
+    <string name="app_name">Shopping App</string>
 
     <!-- Strings related to the login page -->
     <string name="login_title">Welcome! Please log in.</string>

@@ -130,6 +130,6 @@ public class CustomerMenu extends AppCompatActivity implements Serializable{
         accountId = intent.getIntExtra("accountId", 0);
 
         TextView title = (TextView) findViewById(R.id.customerMain);
-        title.setText("Welcome to Ivy's Exotic Pet Store, "+ superCart.getCustomer().getName());
+        title.setText("Welcome to the store, "+ superCart.getCustomer().getName());
     }
 }
