@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
-    tools:context=".RequestToSell">
+    tools:context="com.example.pages.RequestToSell">
 
     <TextView
         android:id="@+id/textView11"

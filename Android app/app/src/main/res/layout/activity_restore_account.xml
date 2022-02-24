@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
-    tools:context=".RestoreAccount">
+    tools:context="com.example.pages.RestoreAccount">
 
     <TextView
         android:id="@+id/textView12"

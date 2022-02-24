@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical"
-    tools:context=".InitializeApp">
+    tools:context="com.example.pages.InitializeApp">
 
     <TextView
         android:id="@+id/textView14"

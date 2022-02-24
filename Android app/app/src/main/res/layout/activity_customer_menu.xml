@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
-    tools:context=".CustomerMenu">
+    tools:context="com.example.pages.CustomerMenu">
 
     <TextView
         android:id="@+id/customerMain"
